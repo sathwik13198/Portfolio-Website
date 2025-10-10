@@ -9,16 +9,18 @@ gsap.registerPlugin(InertiaPlugin);
 // FIX: Replaced the throttle function with a more type-safe implementation.
 // This resolves a TypeScript error where `window` was incorrectly inferred as `never`
 // due to a type mismatch with `addEventListener`.
-const throttle = <T extends (...args: any[]) => any>(
-  func: T,
+// The generic implementation was narrowed to specifically handle Event handler functions
+// to resolve a TypeScript inference issue.
+const throttle = <T extends Event>(
+  func: (event: T) => void,
   limit: number
-): ((...args: Parameters<T>) => void) => {
+): ((event: T) => void) => {
   let lastCall = 0;
-  return (...args: Parameters<T>) => {
+  return (event: T) => {
     const now = performance.now();
     if (now - lastCall >= limit) {
       lastCall = now;
-      func(...args);
+      func(event);
     }
   };
 };
