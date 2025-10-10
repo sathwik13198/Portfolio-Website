@@ -216,6 +216,13 @@ const DotGrid: React.FC<DotGridProps> = ({
   }, [buildGrid]);
 
   useEffect(() => {
+    // FIX: Add a guard to ensure this effect runs only in the browser environment.
+    // This helps TypeScript correctly infer the type of `window` and avoids
+    // the "property does not exist on type 'never'" error, which can occur
+    // due to subtle type inference issues in complex components.
+    if (typeof window === 'undefined') {
+      return;
+    }
     const canvas = canvasRef.current;
     if (!canvas) {
         return;
