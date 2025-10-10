@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { IconApple } from './Icon';
+import { IconApple, IconWifi, IconBattery, IconControlCenter } from './Icon';
 
 interface MenuBarProps {
     toggleTheme: () => void;
@@ -60,8 +60,11 @@ const MenuBar: React.FC<MenuBarProps> = ({ toggleTheme }) => {
         <span>Window</span>
         <span>Help</span>
       </div>
-      <div className="flex items-center space-x-4">
-        <span>{formattedDate}</span>
+      <div className="flex items-center space-x-3">
+        <IconControlCenter />
+        <IconBattery />
+        <IconWifi />
+        <span className="pl-1">{formattedDate}</span>
         <span>{formattedTime}</span>
       </div>
     </div>

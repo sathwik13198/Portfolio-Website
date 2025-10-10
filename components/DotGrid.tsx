@@ -185,6 +185,12 @@ const DotGrid: React.FC<DotGridProps> = ({
   }, [proximity, baseColor, activeRgb, baseRgb, circlePath]);
 
   useEffect(() => {
+    // FIX: Add a guard to ensure this effect runs only in the browser environment.
+    // This helps TypeScript correctly infer the type of `window` and avoids
+    // the "property does not exist on type 'never'" error.
+    if (typeof window === 'undefined') {
+      return;
+    }
     buildGrid();
     let animationFrameId: number;
 
