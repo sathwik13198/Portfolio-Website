@@ -201,24 +201,23 @@ const DotGrid: React.FC<DotGridProps> = ({
       animationFrameId = window.requestAnimationFrame(buildGrid);
     };
 
-    let ro: ResizeObserver | null = null;
-    if ('ResizeObserver' in window) {
-      ro = new ResizeObserver(handleResize);
-      if (wrapperRef.current) {
-        ro.observe(wrapperRef.current);
-      }
+    // FIX: Refactored to use separate return paths for ResizeObserver and the event
+    // listener fallback. This avoids a TypeScript control-flow analysis issue where
+    // 'window' could be incorrectly inferred as 'never' in the 'else' block.
+    if ('ResizeObserver' in window && wrapperRef.current) {
+      const ro = new ResizeObserver(handleResize);
+      ro.observe(wrapperRef.current);
+      return () => {
+        ro.disconnect();
+        window.cancelAnimationFrame(animationFrameId);
+      };
     } else {
       window.addEventListener('resize', handleResize);
-    }
-    
-    return () => {
-      if (ro) {
-        ro.disconnect();
-      } else {
+      return () => {
         window.removeEventListener('resize', handleResize);
-      }
-      window.cancelAnimationFrame(animationFrameId);
-    };
+        window.cancelAnimationFrame(animationFrameId);
+      };
+    }
   }, [buildGrid]);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import Window from './components/Window';
 import Terminal from './components/Terminal';
 import { SkillIcon, IconEducation } from './components/SkillIcons';
 import DotGrid from './components/DotGrid';
+import ResumeContent from './components/ResumeContent';
 
 const ProjectsContent: React.FC = () => {
   return (
@@ -133,7 +134,7 @@ const App: React.FC = () => {
         title: item.title,
         children: <div />,
         initialPosition: { x: Math.random() * 200 + 50, y: Math.random() * 100 + 50 },
-        initialSize: { width: 720, height: 540 },
+        initialSize: { width: item.id === 'resume' ? 860 : 720, height: item.id === 'resume' ? 640 : 540 },
         zIndex: newZIndex,
       };
       
@@ -202,20 +203,26 @@ const App: React.FC = () => {
               <p><strong>LeetCode:</strong> <a href={RESUME_DATA.contact.leetcode} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">leetcode.com/sathwik-pentapati</a></p>
             </div>
             <div className="mt-auto pt-4">
-              <a
-                href="/Sathwik_Pentapati_Resume.pdf"
-                download
+              <button
+                onClick={() => openWindow({ 
+                  id: 'resume', 
+                  title: 'Sathwik Pentapati - Resume', 
+                  icon: <React.Fragment /> 
+                })}
                 className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-colors duration-200"
-                aria-label="Download my resume"
+                aria-label="View my resume"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
                 </svg>
-                Download Resume
-              </a>
+                View Resume
+              </button>
             </div>
           </div>
         );
+      case 'resume':
+        return <ResumeContent />;
       default:
         return null;
     }
