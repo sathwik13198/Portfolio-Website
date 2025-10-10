@@ -15,8 +15,8 @@ const Window: React.FC<WindowProps> = ({
   isClosing
 }) => {
   const handleRef = useRef<HTMLDivElement>(null);
-  const position = useDraggable(handleRef, initialPosition);
   const [size, setSize] = useState(initialSize);
+  const position = useDraggable(handleRef, initialPosition, size);
 
   // Note: Resizing logic is simplified for this MVP.
   

@@ -91,18 +91,24 @@ const AboutContent: React.FC = () => {
 const App: React.FC = () => {
   const [windows, setWindows] = useState<WindowProps[]>([]);
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
-
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
-
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') {
+      return 'dark';
+    }
+    const savedTheme = window.localStorage.getItem('theme') as 'light' | 'dark' | null;
+    if (savedTheme) {
+        return savedTheme;
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+  
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
@@ -185,14 +191,31 @@ const App: React.FC = () => {
             ))}
         </div>;
       case 'contact':
-        return <div className="p-4 bg-gray-100/80 dark:bg-gray-900/80 h-full overflow-y-auto text-gray-800 dark:text-gray-200">
+        return (
+          <div className="p-6 bg-gray-100/80 dark:bg-gray-900/80 h-full flex flex-col text-gray-800 dark:text-gray-200">
             <h1 className="text-2xl font-bold mb-4">Contact Me</h1>
-            <p className="mb-2"><strong>Email:</strong> <a href={`mailto:${RESUME_DATA.contact.email}`} className="text-blue-600 dark:text-blue-400 hover:underline">{RESUME_DATA.contact.email}</a></p>
-            <p className="mb-2"><strong>Phone:</strong> {RESUME_DATA.contact.phone}</p>
-            <p className="mb-2"><strong>LinkedIn:</strong> <a href={RESUME_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">linkedin.com/in/sathwik-pentapati</a></p>
-            <p className="mb-2"><strong>GitHub:</strong> <a href={RESUME_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">github.com/sathwik-pentapati</a></p>
-            <p><strong>LeetCode:</strong> <a href={RESUME_DATA.contact.leetcode} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">leetcode.com/sathwik-pentapati</a></p>
-        </div>;
+            <div className="space-y-3 flex-grow">
+              <p><strong>Email:</strong> <a href={`mailto:${RESUME_DATA.contact.email}`} className="text-blue-600 dark:text-blue-400 hover:underline">{RESUME_DATA.contact.email}</a></p>
+              <p><strong>Phone:</strong> {RESUME_DATA.contact.phone}</p>
+              <p><strong>LinkedIn:</strong> <a href={RESUME_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">linkedin.com/in/sathwik-pentapati</a></p>
+              <p><strong>GitHub:</strong> <a href={RESUME_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">github.com/sathwik-pentapati</a></p>
+              <p><strong>LeetCode:</strong> <a href={RESUME_DATA.contact.leetcode} target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:underline">leetcode.com/sathwik-pentapati</a></p>
+            </div>
+            <div className="mt-auto pt-4">
+              <a
+                href="/Sathwik_Pentapati_Resume.pdf"
+                download
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center transition-colors duration-200"
+                aria-label="Download my resume"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+                Download Resume
+              </a>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
