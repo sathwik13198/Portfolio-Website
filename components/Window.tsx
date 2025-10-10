@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import type { WindowProps } from '../types';
 import { useDraggable } from '../hooks/useDraggable';
+import { useResizable } from '../hooks/useResizable';
 
 const Window: React.FC<WindowProps> = ({
   id,
@@ -15,11 +16,14 @@ const Window: React.FC<WindowProps> = ({
   isClosing
 }) => {
   const handleRef = useRef<HTMLDivElement>(null);
-  const [size, setSize] = useState(initialSize);
+  const resizeHandleRef = useRef<HTMLDivElement>(null);
+
+  // Use the new useResizable hook to manage window size
+  const size = useResizable(resizeHandleRef, initialSize, { minWidth: 400, minHeight: 300 });
+  
+  // The useDraggable hook now receives the dynamic size to correctly clamp the window position
   const position = useDraggable(handleRef, initialPosition, size);
 
-  // Note: Resizing logic is simplified for this MVP.
-  
   return (
     <div
       id={id}
@@ -49,6 +53,12 @@ const Window: React.FC<WindowProps> = ({
       <div className="flex-grow overflow-hidden rounded-b-lg">
         {children}
       </div>
+      {/* Resizing handle */}
+      <div
+        ref={resizeHandleRef}
+        className="absolute bottom-0 right-0 w-4 h-4 cursor-se-resize"
+        aria-label="Resize window"
+      />
     </div>
   );
 };
