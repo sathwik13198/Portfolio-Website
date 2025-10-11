@@ -27,7 +27,7 @@ const App: React.FC = () => {
   const isDesktop = useMediaQuery('(min-width: 768px)');
 
   return (
-    <main className="w-screen h-screen overflow-hidden bg-gray-200 dark:bg-[#0d1117] transition-colors duration-300">
+    <main className={`w-screen ${isDesktop ? 'h-screen overflow-hidden' : 'min-h-screen'} bg-gray-200 dark:bg-[#0d1117] transition-colors duration-300`}>
       {isDesktop ? (
         <DesktopView toggleTheme={toggleTheme} />
       ) : (

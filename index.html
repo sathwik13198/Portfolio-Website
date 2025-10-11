@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF--8" />
+    <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sathwik Pentapati - Portfolio</title>
@@ -99,6 +99,53 @@
       * {
         scrollbar-width: thin;
         scrollbar-color: rgba(155, 155, 155, 0.5) transparent;
+      }
+
+      /* Shiny Button Effect for Skills */
+      .shiny-button {
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+      }
+      .shiny-button::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(transparent, rgba(168, 85, 247, 0.7), rgba(88, 101, 242, 0.7), transparent 35%);
+        animation: rotate 6s linear infinite;
+      }
+      .dark .shiny-button::before {
+        background: conic-gradient(transparent, rgba(168, 85, 247, 1), rgba(88, 101, 242, 1), transparent 35%);
+      }
+      .shiny-button:hover::before {
+        animation-duration: 3s;
+      }
+      @keyframes rotate {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      
+      .skill-button {
+        transition: transform 0.2s ease;
+      }
+      .skill-button:hover {
+        transform: scale(1.05);
+      }
+
+      /* Project Card Hover Effect */
+      .project-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .dark .project-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
       }
     </style>
   <script type="importmap">
