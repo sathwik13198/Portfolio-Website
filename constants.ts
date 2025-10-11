@@ -9,9 +9,9 @@ export const RESUME_DATA = {
   contact: {
     phone: "+91 9666713198",
     email: "sathwikpentapati@gmail.com",
-    linkedin: "https://www.linkedin.com/in/sathwik-pentapati/",
-    github: "https://github.com/sathwik-pentapati",
-    leetcode: "https://leetcode.com/sathwik-pentapati/"
+    linkedin: "https://www.linkedin.com/in/sathwikpentapati/",
+    github: "https://github.com/sathwik13198/",
+    leetcode: "https://leetcode.com/u/VPTDJzmOny/"
   },
   experience: [
     {

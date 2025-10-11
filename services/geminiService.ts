@@ -42,7 +42,7 @@ const initializeChat = (): boolean => {
 export const getChatbotResponse = async (message: string, history: ChatMessage[]): Promise<string> => {
   if (!API_KEY) {
     console.error("API_KEY environment variable not set!");
-    return "I'm sorry, the AI service is not configured correctly. The API_KEY is missing. Please contact the site owner to fix this issue.";
+    return "I'm currently running in offline mode as the AI service isn't configured. If I were online, you could ask me questions like:\n\n- 'What technologies is Sathwik skilled in?'\n- 'Tell me about his internship at Kritno.'\n- 'Summarize the CrowdConnect project.'\n\nPlease contact the site owner to enable the full AI experience.";
   }
 
   // Initialize the chat on the first call.

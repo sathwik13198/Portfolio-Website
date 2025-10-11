@@ -147,6 +147,33 @@
       .dark .project-card:hover {
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
       }
+
+      /* Chatbot Button Glow */
+      .chatbot-glow {
+        box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+        animation: pulse-blue 2.5s infinite;
+        transition: transform 0.3s ease;
+      }
+
+      .chatbot-glow:hover {
+        animation-play-state: paused;
+        transform: scale(1.1);
+      }
+
+      @keyframes pulse-blue {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+        }
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+        }
+      }
     </style>
   <script type="importmap">
 {

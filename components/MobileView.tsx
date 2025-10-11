@@ -144,10 +144,30 @@ const MobileChatbot: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
   
+    const suggestions = [
+        "Tell me about Sathwik",
+        "What are his top skills?",
+        "Summarize his experience",
+    ];
+
     useEffect(() => {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages, isLoading]);
   
+    const handleApiCall = async (userInput: string, currentMessages: ChatMessage[]) => {
+        setIsLoading(true);
+        try {
+          const responseText = await getChatbotResponse(userInput, currentMessages);
+          const modelMessage: ChatMessage = { role: 'model', parts: [{ text: responseText }] };
+          setMessages(prev => [...prev, modelMessage]);
+        } catch (error) {
+          const errorMessage: ChatMessage = { role: 'model', parts: [{ text: "Sorry, I couldn't get a response. Please try again." }] };
+          setMessages(prev => [...prev, errorMessage]);
+        } finally {
+          setIsLoading(false);
+        }
+    };
+    
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       if (!input.trim() || isLoading) return;
@@ -155,25 +175,23 @@ const MobileChatbot: React.FC = () => {
       const userMessage: ChatMessage = { role: 'user', parts: [{ text: input }] };
       const newMessages = [...messages, userMessage];
       setMessages(newMessages);
+      const currentInput = input;
       setInput('');
-      setIsLoading(true);
-  
-      try {
-        const responseText = await getChatbotResponse(input, newMessages);
-        const modelMessage: ChatMessage = { role: 'model', parts: [{ text: responseText }] };
-        setMessages(prev => [...prev, modelMessage]);
-      } catch (error) {
-        const errorMessage: ChatMessage = { role: 'model', parts: [{ text: "Sorry, I couldn't get a response. Please try again." }] };
-        setMessages(prev => [...prev, errorMessage]);
-      } finally {
-        setIsLoading(false);
-      }
+      await handleApiCall(currentInput, newMessages);
+    };
+
+    const handleSuggestionClick = async (suggestion: string) => {
+        if (isLoading) return;
+        const userMessage: ChatMessage = { role: 'user', parts: [{ text: suggestion }] };
+        const newMessages = [...messages, userMessage];
+        setMessages(newMessages);
+        await handleApiCall(suggestion, newMessages);
     };
   
     return (
       <>
         <div className={`fixed bottom-0 right-0 m-4 sm:m-6 z-50 transition-all duration-300 ${isOpen ? 'opacity-0 scale-90 pointer-events-none' : 'opacity-100 scale-100'}`}>
-          <button onClick={() => setIsOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg flex items-center justify-center" aria-label="Open chatbot">
+          <button onClick={() => setIsOpen(true)} className="chatbot-glow bg-blue-600 hover:bg-blue-700 text-white rounded-full p-4 shadow-lg flex items-center justify-center" aria-label="Open chatbot">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
           </button>
         </div>
@@ -196,6 +214,22 @@ const MobileChatbot: React.FC = () => {
                             </div>
                         </div>
                     ))}
+
+                    {!isLoading && messages.length === 1 && (
+                        <div className="flex flex-col items-start space-y-2 pt-2">
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Or try one of these prompts:</p>
+                            {suggestions.map((text, i) => (
+                                <button 
+                                    key={i}
+                                    onClick={() => handleSuggestionClick(text)}
+                                    className="bg-gray-200/80 dark:bg-gray-700/80 text-blue-600 dark:text-blue-400 text-sm font-medium px-4 py-2 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+                                >
+                                    {text}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+
                     {isLoading && (
                          <div className="flex justify-start">
                              <div className="px-4 py-2 rounded-2xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
@@ -267,6 +301,11 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
         gsap.registerPlugin(ScrollTrigger);
 
         gsap.fromTo(".header-content", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+        
+        gsap.fromTo(".contact-icon", 
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.8, stagger: 0.2, ease: 'power3.out', delay: 0.4 }
+        );
 
         gsap.utils.toArray('.animated-card').forEach((card: any) => {
             gsap.fromTo(card, 
@@ -329,10 +368,9 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
                                 className="text-xl sm:text-2xl font-semibold text-blue-500 dark:text-blue-400 mt-4 h-8"
                             />
                             <div className="mt-8 flex justify-center space-x-6">
-                                <a href={`mailto:${RESUME_DATA.contact.email}`} className="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors" aria-label="Email"><IconEmail className="w-7 h-7" /></a>
-                                <a href={RESUME_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors" aria-label="LinkedIn"><IconLinkedIn className="w-7 h-7" /></a>
-                                <a href={RESUME_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors" aria-label="GitHub"><IconGitHub className="w-7 h-7" /></a>
-                                <a href={RESUME_DATA.contact.leetcode} target="_blank" rel="noopener noreferrer" className="text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors" aria-label="LeetCode"><IconLeetCode className="w-7 h-7" /></a>
+                                <a href={`mailto:${RESUME_DATA.contact.email}`} className="contact-icon text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-115" aria-label="Email"><IconEmail className="w-7 h-7" /></a>
+                                <a href={RESUME_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="contact-icon text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-115" aria-label="LinkedIn"><IconLinkedIn className="w-7 h-7" /></a>
+                                <a href={RESUME_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="contact-icon text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-115" aria-label="GitHub"><IconGitHub className="w-7 h-7" /></a>
                             </div>
                         </div>
                     </header>
