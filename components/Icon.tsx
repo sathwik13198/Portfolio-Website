@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export const IconApple: React.FC = () => (
@@ -93,8 +94,6 @@ export const IconCrowdConnect: React.FC<{className?: string}> = ({className}) =>
         <path d="M32 26C35.3137 26 38 23.3137 38 20C38 16.6863 35.3137 14 32 14C28.6863 14 26 16.6863 26 20C26 23.3137 28.6863 26 32 26Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M10 50V46C10 41.5817 13.5817 38 18 38H20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M54 50V46C54 41.5817 50.4183 38 46 38H44" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M18 28C21.3137 28 24 25.3137 24 22C24 18.6863 21.3137 16 18 16C14.6863 16 12 18.6863 12 22C12 25.3137 14.6863 28 18 28Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M46 28C49.3137 28 52 25.3137 52 22C52 18.6863 49.3137 16 46 16C42.6863 16 40 18.6863 40 22C40 25.3137 42.6863 28 46 28Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
 
@@ -102,12 +101,48 @@ export const IconSmartMeds: React.FC<{className?: string}> = ({className}) => (
      <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M52 24H44V16H52V24Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M20 24H12V16H20V24Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M52 48H44V40H52V48Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M20 48H12V40H20V48Z" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M44 20H20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M44 44H20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M48 44V20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-        <path d="M16 44V20" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M32 20V44M20 32H44" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+    </svg>
+);
+
+export const IconCryptography: React.FC<{className?: string}> = ({className}) => (
+    <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="12" width="40" height="40" rx="4" stroke="currentColor" strokeWidth="4" />
+        <path d="M12 32H52M32 12V52" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" />
+        <circle cx="32" cy="32" r="8" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="2" />
+    </svg>
+);
+
+export const IconChatbot: React.FC<{className?: string}> = ({className}) => (
+    <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="24" width="36" height="28" rx="4" stroke="currentColor" strokeWidth="4" />
+        <path d="M24 24V16C24 13.7909 25.7909 12 28 12H36C38.2091 12 40 13.7909 40 16V24" stroke="currentColor" strokeWidth="4" />
+        <circle cx="24" cy="36" r="3" fill="currentColor" />
+        <circle cx="40" cy="36" r="3" fill="currentColor" />
+        <path d="M24 44H40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    </svg>
+);
+
+export const IconAccess: React.FC<{className?: string}> = ({className}) => (
+    <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 44C38.6274 44 44 38.6274 44 32C44 25.3726 38.6274 20 32 20C25.3726 20 20 25.3726 20 32C20 38.6274 25.3726 44 32 44Z" stroke="currentColor" strokeWidth="4" />
+        <path d="M32 32V24M32 32L38 38" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+        <path d="M12 32H20M44 32H52" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    </svg>
+);
+
+export const IconInterview: React.FC<{className?: string}> = ({className}) => (
+    <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 20H44V44H20V20Z" stroke="currentColor" strokeWidth="4" />
+        <path d="M28 28H36M28 36H36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+        <path d="M12 52L20 44M52 52L44 44" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
+    </svg>
+);
+
+export const IconCodeGuardian: React.FC<{className?: string}> = ({className}) => (
+    <svg className={className} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M32 10L14 18V32C14 43.0457 22.0589 53.0818 32 56C41.9411 53.0818 50 43.0457 50 32V18L32 10Z" stroke="currentColor" strokeWidth="4" strokeLinejoin="round" />
+        <path d="M24 32L30 38L40 28" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
 );
 

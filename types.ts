@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 export interface WindowProps {
@@ -8,8 +9,10 @@ export interface WindowProps {
   initialSize: { width: number, height: number };
   zIndex: number;
   onClose?: () => void;
+  onMinimize?: () => void;
   onFocus?: () => void;
   isActive?: boolean;
+  isMinimized?: boolean;
   isClosing?: boolean;
 }
 

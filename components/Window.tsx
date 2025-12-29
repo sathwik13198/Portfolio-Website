@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import type { WindowProps } from '../types';
 import { useDraggable } from '../hooks/useDraggable';
@@ -11,8 +12,10 @@ const Window: React.FC<WindowProps> = ({
   initialSize,
   zIndex,
   onClose,
+  onMinimize,
   onFocus,
   isActive,
+  isMinimized,
   isClosing
 }) => {
   const handleRef = useRef<HTMLDivElement>(null);
@@ -23,6 +26,8 @@ const Window: React.FC<WindowProps> = ({
   
   // The useDraggable hook now receives the dynamic size to correctly clamp the window position
   const position = useDraggable(handleRef, initialPosition, size);
+
+  if (isMinimized) return null;
 
   return (
     <div
@@ -44,7 +49,7 @@ const Window: React.FC<WindowProps> = ({
       >
         <div className="flex items-center space-x-2">
           <button onClick={onClose} className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-600" aria-label="Close"></button>
-          <button className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-600" aria-label="Minimize"></button>
+          <button onClick={onMinimize} className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-600" aria-label="Minimize"></button>
           <button className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-600" aria-label="Maximize"></button>
         </div>
         <span className="text-gray-800 dark:text-gray-200">{title}</span>

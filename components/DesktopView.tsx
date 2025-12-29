@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { RESUME_DATA, PROJECTS_DATA } from '../constants';
 import type { WindowProps, DockItem } from '../types';
@@ -153,10 +154,12 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
       const existingWindow = prevWindows.find(w => w.id === item.id);
       if (existingWindow) {
         setActiveWindowId(item.id);
+        const maxZ = Math.max(...prevWindows.map(win => win.zIndex), 0);
         return prevWindows.map(w => ({
           ...w,
           isClosing: false,
-          zIndex: w.id === item.id ? Math.max(...prevWindows.map(win => win.zIndex)) + 1 : w.zIndex
+          isMinimized: false,
+          zIndex: w.id === item.id ? maxZ + 1 : w.zIndex
         }));
       }
 
@@ -168,6 +171,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
         initialPosition: { x: Math.random() * 200 + 50, y: Math.random() * 100 + 50 },
         initialSize: { width: item.id === 'resume' ? 860 : 720, height: item.id === 'resume' ? 640 : 540 },
         zIndex: newZIndex,
+        isMinimized: false,
       };
       
       setActiveWindowId(item.id);
@@ -192,6 +196,11 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
             return remainingWindows;
         });
     }, 200);
+  };
+
+  const minimizeWindow = (id: string) => {
+    setWindows(ws => ws.map(w => (w.id === id ? { ...w, isMinimized: true } : w)));
+    setActiveWindowId(null);
   };
 
   const focusWindow = (id: string) => {
@@ -294,6 +303,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
             key={win.id}
             {...win}
             onClose={() => closeWindow(win.id)}
+            onMinimize={() => minimizeWindow(win.id)}
             onFocus={() => focusWindow(win.id)}
             isActive={win.id === activeWindowId}
           >
@@ -301,7 +311,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
           </Window>
         ))}
       </div>
-      <Dock onIconClick={openWindow} />
+      <Dock onIconClick={openWindow} openWindows={windows} />
     </div>
   );
 };

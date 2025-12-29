@@ -9,15 +9,27 @@ export const RESUME_DATA = {
   contact: {
     phone: "+91 9666713198",
     email: "sathwikpentapati@gmail.com",
-    linkedin: "https://www.linkedin.com/in/sathwikpentapati/",
-    github: "https://github.com/sathwik13198/",
+    linkedin: "https://www.linkedin.com/in/sathwik-pentapati/",
+    github: "https://github.com/sathwik13198",
     leetcode: "https://leetcode.com/u/VPTDJzmOny/"
   },
   experience: [
     {
+      company: "Indian Space Research Organisation (ISRO)",
+      role: "Research and Software Development Intern",
+      period: "Dec 2025 - Present",
+      location: "Hyderabad, India",
+      points: [
+        "Developing an Android-based secure communication and monitoring application for mission-critical systems using Kotlin and Jetpack Compose.",
+        "Implementing real-time location tracking, MQTT-based messaging, and offline-first architecture to ensure reliability in low-connectivity environments.",
+        "Integrating SIP-based voice calling and optimized media handling for low-latency communication across distributed systems.",
+        "Working closely with scientists and engineers to translate operational requirements into scalable software modules."
+      ]
+    },
+    {
       company: "Kritno",
       role: "Software Engineer Intern",
-      period: "Aug 2025 - Present",
+      period: "Aug 2025 - Dec 2025",
       location: "Remote",
       points: [
         "Contributing to the development of an accessibility SaaS platform, improving inclusivity for users with diverse needs.",
@@ -60,67 +72,45 @@ export const RESUME_DATA = {
   ],
   skills: {
     languages: "C, Java, Python, HTML5, JavaScript, TypeScript",
-    toolsAndPlatforms: "Git, AWS, Docker, Kubernetes, AI-assisted coding, Postman",
-    technologiesAndFrameworks: "CSS, React.js, Next.js, Redux, Vue.js, Express.js, Node.js, MongoDB, SQL, Socket.IO",
-    testingAndSecurity: "JWT, OAuth, Secure Coding (OWASP), Web Performance Optimization",
+    toolsAndPlatforms: "Git, AWS, Docker, Kubernetes, Postman, AI-assisted coding",
+    technologiesAndFrameworks: "React.js, Next.js, Redux, Vue.js, Express.js, Node.js, MongoDB, SQL, Socket.IO, FastAPI",
+    testingAndSecurity: "JWT, OAuth, OWASP, Web Performance Optimization",
     operatingSystems: "Windows, Linux",
     softSkills: "Communication, Problem-solving, Teamwork, Adaptability, Leadership"
   },
   achievements: [
     "HACK'NIGHT 2025 Finalist: Reached the finals in a national-level hackathon, showcasing innovative full-stack solutions.",
-    "Certifications: Meta Back-End Developer Specialization, Java and Object-Oriented Programming, IBM Linux.",
+    "Certifications: Meta Back-End Developer Specialization, Java and Object-Oriented Programming, AWS Cloud Practitioner, IBM Linux.",
     "1st Prize - State-Level Badminton: Demonstrated discipline and competitiveness in state sports events.",
-    "NSS Volunteer: Coordinated and led large-scale events and technical workshops, improving team collaboration and participation."
+    "NSS Volunteer: Coordinated and led large-scale events and technical workshops."
   ]
 };
 
 export const PROJECTS_DATA = [
     {
-        name: "Visual Cryptography System for Images",
-        tech: "Python, OpenCV, cryptography libraries (AES etc.)",
+        name: "CodeGuardian AI",
+        tech: "React, TypeScript, Google Gemini API, GitHub REST API, Firebase Firestore, Tailwind CSS",
         points: [
-            "Implemented a visual cryptography scheme to split an image into shares such that stacking them reconstructs the original image.",
-            "Supported multiple modes: binary, grayscale, colored image encryption / decryption.",
-            "Employed AES + pixel-level operations to enhance security.",
-            "Measured output quality using metrics like PSNR, SSIM, and compared decrypted vs original."
+            "Built an AI-driven code analysis platform to automate PR reviews with security and performance insights.",
+            "Engineered a \"Chat with Repo\" LLM interface using tool-calling and RAG-style queries."
         ]
     },
     {
-        name: "LeetMate (AI-Powered Coding Helper / Extension)",
-        tech: "React.js, Chrome Extension APIs, Webpack (Manifest V3), AI / LLM APIs",
+        name: "Smart Meds (AI Hospital System)",
+        tech: "React, FastAPI, PostgreSQL, JWT Authentication, VADER NLP, OpenAI GPT-4 API",
         points: [
-            "Built a Chrome extension that, given a LeetCode problem, generates code solutions + explanations in multiple languages.",
-            "Designed the UI in React, integrated with browser APIs for injection and context handling.",
-            "Used AI / LLM (e.g. Gemini 2.5 Flash) to produce human-friendly explanations (with style, emojis, varied tone).",
-            "Ensured performance & minimal overhead in the browser environment."
+            "Developed an AI-powered hospital management system featuring a GPT-4 medical chatbot, automated appointment scheduling, and real-time ADR monitoring.",
+            "Built scalable FastAPI + PostgreSQL backend services optimized for high-traffic medical workflows.",
+            "Implemented role-based access control for doctors, patients, and administrators."
         ]
     },
     {
-        name: "Integratable Chatbot / Conversational Engine",
-        tech: "Python / Node.js, REST / WebSocket APIs, optional AI / NLP libraries",
+        name: "LeetMate (AI-Powered Coding Helper)",
+        tech: "React.js, Chrome Extension APIs, Webpack, Gemini 2.5 Flash API, Prism.js, Manifest V3",
         points: [
-            "Developed a modular chatbot system that can be integrated into existing apps / websites.",
-            "Handled authentication, session management, fallback responses & stateful conversation.",
-            "Optionally integrated external AI / LLM backends or custom logic for domain-specific responses.",
-            "Provided endpoints / SDK for embedding the chatbot into frontends."
-        ]
-    },
-    {
-        name: "Blend Access Helper",
-        tech: "TypeScript / JavaScript, utility / helper library architecture",
-        points: [
-            "Created a helper / utility module to centralize access control / permission logic across services.",
-            "Abstracted common patterns, reduced repetition, improved consistency in controlling user roles / capabilities.",
-            "Distributed / packaged for reuse across multiple projects."
-        ]
-    },
-    {
-        name: "Interview Escaler / Interview Helper Platform",
-        tech: "Full-stack (React / Node / DB stack)",
-        points: [
-            "Built a platform or tool to help users escalate or scale interview preparations.",
-            "Features may include curated questions, mock interview, scheduling, feedback modules.",
-            "Implemented backend APIs, frontend UI, and data persistence."
+            "Developed a Chrome extension that generates AI-powered solutions for LeetCode problems with emoji-rich explanations.",
+            "Integrated Gemini 2.5 Flash API to provide real-time, multi-language solutions.",
+            "Designed the UI in React, integrated with browser APIs for injection and context handling."
         ]
     },
     {
@@ -128,22 +118,47 @@ export const PROJECTS_DATA = [
         tech: "MongoDB, Express.js, React.js, Node.js, Stripe API",
         points: [
             "Developed a full MERN web app where startups can raise funds and creators can monetize exclusive content.",
-            "Integrated Stripe for secure payments, subscription / campaign modules.",
-            "Built features like user profiles, content gating, funding tracking, dashboard analytics."
+            "Integrated Stripe for secure payments, subscription/campaign modules, and built user profiles with dashboard analytics.",
+            "Implemented content gating and funding tracking modules."
         ]
     },
     {
-        name: "Smart Meds (AI Hospital / Healthcare System)",
-        tech: "React, FastAPI, SQL (PostgreSQL / MySQL), JWT Auth, NLP / Sentiment (VADER or similar), LLM / Chatbot integration",
+        name: "Visual Cryptography System for Images",
+        tech: "Python, OpenCV, AES, Cryptography libraries",
         points: [
-            "Developed a hospital / medical system platform with features like appointments, patient management, ADR (adverse drug reaction) tracking.",
-            "Integrated AI / LLM chatbot for user queries, medical help, triaging.",
-            "Implemented real-time ADR monitoring using sentiment / NLP techniques.",
-            "Secure authentication & role-based access control (doctors, patients, admin)."
+            "Implemented a visual cryptography scheme to split an image into shares such that stacking them reconstructs the original image.",
+            "Supported multiple modes: binary, grayscale, colored image encryption/decryption.",
+            "Employed AES + pixel-level operations to enhance security and measured quality using PSNR and SSIM."
+        ]
+    },
+    {
+        name: "Integratable Chatbot Engine",
+        tech: "Python, Node.js, REST/WebSocket APIs, AI/NLP libraries",
+        points: [
+            "Developed a modular chatbot system that can be integrated into existing apps/websites.",
+            "Handled authentication, session management, fallback responses, and stateful conversation flow.",
+            "Provided endpoints and SDK for seamless embedding into frontend applications."
+        ]
+    },
+    {
+        name: "Blend Access Helper",
+        tech: "TypeScript, JavaScript, Utility Library Architecture",
+        points: [
+            "Created a helper/utility module to centralize access control and permission logic across multiple services.",
+            "Abstracted common patterns to reduce repetition and improve consistency in controlling user capabilities.",
+            "Designed as a distributed package for reuse across various enterprise-level projects."
+        ]
+    },
+    {
+        name: "Interview Escaler Platform",
+        tech: "React, Node.js, PostgreSQL, Socket.IO",
+        points: [
+            "Built a full-stack platform to help users escalate or scale their interview preparations.",
+            "Features included curated questions, mock interview modules, scheduling, and real-time feedback systems.",
+            "Implemented backend APIs, responsive UI, and robust data persistence."
         ]
     }
 ];
-
 
 export const DOCK_ITEMS: DockItem[] = [
   { id: 'about', title: 'About Me', icon: React.createElement(IconAbout) },

@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Chat } from "@google/genai";
 import { RESUME_DATA } from '../constants';
 import type { ChatMessage } from '../types';
@@ -27,9 +28,9 @@ const initializeChat = (): boolean => {
             return false;
         }
     }
-    // Create a new chat session.
+    // Create a new chat session using the latest Gemini 3 model.
     chat = ai.chats.create({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3-flash-preview',
         config: {
             systemInstruction: systemInstruction,
         },
@@ -42,7 +43,7 @@ const initializeChat = (): boolean => {
 export const getChatbotResponse = async (message: string, history: ChatMessage[]): Promise<string> => {
   if (!API_KEY) {
     console.error("API_KEY environment variable not set!");
-    return "I'm currently running in offline mode as the AI service isn't configured. If I were online, you could ask me questions like:\n\n- 'What technologies is Sathwik skilled in?'\n- 'Tell me about his internship at Kritno.'\n- 'Summarize the CrowdConnect project.'\n\nPlease contact the site owner to enable the full AI experience.";
+    return "I'm currently running in offline mode as the AI service isn't configured. If I were online, you could ask me questions like:\n\n- 'What technologies is Sathwik skilled in?'\n- 'Tell me about his internship at ISRO.'\n- 'What did he do for the Smart Meds project?'\n\nPlease contact the site owner to enable the full AI experience.";
   }
 
   // Initialize the chat on the first call.
@@ -58,7 +59,6 @@ export const getChatbotResponse = async (message: string, history: ChatMessage[]
   } catch (error) {
     console.error("Error getting response from Gemini API:", error);
     // Reset the chat session on error, so the user can try again.
-    // This can help recover from transient network issues or invalid session states.
     chat = null;
     return "I'm sorry, I encountered an error while processing your request. It could be a network issue or an invalid API key. Please try again.";
   }

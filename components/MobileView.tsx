@@ -1,10 +1,25 @@
+
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { RESUME_DATA, PROJECTS_DATA } from '../constants';
 import type { ChatMessage } from '../types';
 import { getChatbotResponse } from '../services/geminiService';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { IconLeetMate, IconCrowdConnect, IconSmartMeds, IconGenericProject, IconEmail, IconLinkedIn, IconGitHub, IconLeetCode } from './Icon';
+import { 
+    IconLeetMate, 
+    IconCrowdConnect, 
+    IconSmartMeds, 
+    IconGenericProject, 
+    IconEmail, 
+    IconLinkedIn, 
+    IconGitHub, 
+    IconLeetCode,
+    IconCryptography,
+    IconChatbot,
+    IconAccess,
+    IconInterview,
+    IconCodeGuardian
+} from './Icon';
 import DotGrid from './DotGrid';
 
 interface MobileViewProps {
@@ -18,7 +33,6 @@ const navLinks = [
     { name: 'Skills', href: '#skills' },
 ];
 
-// Typing Animation Component (as seen in DesktopView)
 const TypingAnimation: React.FC<{ roles: string[]; prefix?: string; className?: string; }> = ({ 
   roles, 
   prefix = "Software Developer - ", 
@@ -39,16 +53,14 @@ const TypingAnimation: React.FC<{ roles: string[]; prefix?: string; className?: 
       setText(updatedText);
 
       if (!isDeleting && updatedText === currentRole) {
-        setTypingSpeed(2000); // Pause at end of word
+        setTypingSpeed(2000);
         setIsDeleting(true);
       } else if (isDeleting && updatedText === '') {
         setIsDeleting(false);
         setRoleIndex((prevIndex) => (prevIndex + 1) % roles.length);
         setTypingSpeed(150);
-      } else if (isDeleting) {
-        setTypingSpeed(75);
       } else {
-        setTypingSpeed(150);
+        setTypingSpeed(isDeleting ? 75 : 150);
       }
     };
 
@@ -68,7 +80,6 @@ const TypingAnimation: React.FC<{ roles: string[]; prefix?: string; className?: 
 const MobileNav: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
-    // FIX: Changed ref type to allow for null values from ref callbacks on unmount.
     const navLinksRef = useRef<(HTMLAnchorElement | null)[]>([]);
 
     useEffect(() => {
@@ -81,7 +92,6 @@ const MobileNav: React.FC<{ toggleTheme: () => void }> = ({ toggleTheme }) => {
     
     useEffect(() => {
         if (isOpen) {
-            // FIX: Filter out any null values from the refs array before passing to GSAP.
             gsap.fromTo(navLinksRef.current.filter(Boolean), 
                 { y: -30, opacity: 0 },
                 { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' }
@@ -271,6 +281,11 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS_DATA[0] }> = ({ project }
         if (name.includes('leetmate')) return IconLeetMate;
         if (name.includes('crowdconnect')) return IconCrowdConnect;
         if (name.includes('smart meds')) return IconSmartMeds;
+        if (name.includes('cryptography')) return IconCryptography;
+        if (name.includes('chatbot')) return IconChatbot;
+        if (name.includes('access')) return IconAccess;
+        if (name.includes('interview')) return IconInterview;
+        if (name.includes('codeguardian')) return IconCodeGuardian;
         return IconGenericProject;
     }, [project.name]);
 
@@ -356,7 +371,6 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
                 <MobileNav toggleTheme={toggleTheme} />
 
                 <main className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-                    {/* Header Section */}
                     <header className="min-h-screen flex flex-col justify-center text-center">
                         <div className="header-content">
                             <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
@@ -375,7 +389,6 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
                         </div>
                     </header>
 
-                    {/* Sections */}
                     <div className="space-y-24 pb-24">
                         <section id="about" className="mobile-section">
                             <h3 className="animated-card text-3xl font-bold mb-6 pb-2 border-b-2 border-gray-200 dark:border-gray-700">About Me</h3>
@@ -386,7 +399,7 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
                             <h3 className="animated-card text-3xl font-bold mb-6 pb-2 border-b-2 border-gray-200 dark:border-gray-700">Experience</h3>
                             <div className="space-y-8">
                                 {RESUME_DATA.experience.map((exp) => (
-                                    <div key={exp.company} className="animated-card">
+                                    <div key={exp.company + exp.role} className="animated-card">
                                         <p className="text-xl font-semibold text-gray-900 dark:text-white">{exp.role}</p>
                                         <p className="text-lg font-medium text-gray-700 dark:text-gray-300">{exp.company}</p>
                                         <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{exp.period} | {exp.location}</p>
