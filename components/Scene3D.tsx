@@ -1,6 +1,8 @@
 
+"use client";
+
 import React, { useRef, Suspense, useMemo, useState, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { 
   Float, 
   Sparkles, 
@@ -46,7 +48,7 @@ const Loader = () => {
   );
 };
 
-const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: string, globalMouse: React.MutableRefObject<{x: number, y: number}>, scrollProgress: number }) => {
+const ScreenBot = ({ themeColor, globalMouse }: { themeColor: string, globalMouse: React.MutableRefObject<{x: number, y: number}> }) => {
   const headRef = useRef<THREE.Group>(null);
   const leftEyeRef = useRef<THREE.Mesh>(null);
   const rightEyeRef = useRef<THREE.Mesh>(null);
@@ -62,26 +64,15 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
     const t = state.clock.getElapsedTime();
     
     if (headRef.current) {
-      // TRACKING LOGIC:
-      // Horizontal (Y rotation): mouse.x is -1 to 1. 1.0 multiplier for wide range.
       const targetRotationY = globalMouse.current.x * 1.0; 
-      
-      // Vertical (X rotation): 
-      // Mouse Y at TOP is -1. We want the head to tilt UP.
-      // In this coordinate system, tilting UP is a negative X rotation.
-      // So targetRotationX should equal globalMouse.y (no minus sign needed).
       const targetRotationX = globalMouse.current.y * 0.6; 
       
       headRef.current.rotation.y = THREE.MathUtils.lerp(headRef.current.rotation.y, targetRotationY, 0.1);
       headRef.current.rotation.x = THREE.MathUtils.lerp(headRef.current.rotation.x, targetRotationX, 0.1);
-      
-      // Floating motion
       headRef.current.position.y = 1.6 + Math.sin(t * 1.5) * 0.1;
     }
 
-    // Eye shifting parallax (Internal eye movement)
     if (leftEyeRef.current && rightEyeRef.current) {
-        // When cursor is at top (mouseY = -1), eye should move UP (+0.05)
         const eyeX = globalMouse.current.x * 0.12;
         const eyeY = -globalMouse.current.y * 0.08;
         
@@ -95,7 +86,6 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
 
   return (
     <group>
-      {/* GREETING BUBBLE */}
       {showGreeting && (
         <Html position={[1.8, 3.2, 0]} center distanceFactor={10}>
           <div className="bg-black/80 backdrop-blur-2xl border border-white/20 px-5 py-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] animate-bounce transition-all">
@@ -107,7 +97,6 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
         </Html>
       )}
 
-      {/* TORSO */}
       <Float speed={2.5} rotationIntensity={0.3} floatIntensity={0.6}>
         <mesh position={[0, -0.2, 0]}>
           <capsuleGeometry args={[0.95, 1.4, 16, 32]} />
@@ -119,7 +108,6 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
         </mesh>
       </Float>
 
-      {/* HEAD ASSEMBLY */}
       <group ref={headRef} position={[0, 1.6, 0]}>
         <RoundedBox args={[2.4, 1.8, 1.6]} radius={0.5} smoothness={8}>
           <meshStandardMaterial 
@@ -129,7 +117,6 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
           />
         </RoundedBox>
         
-        {/* Antennas */}
         <group position={[0, 1.1, 0]}>
             <mesh position={[-0.8, 0, 0]}>
                 <cylinderGeometry args={[0.02, 0.02, 0.7]} />
@@ -149,14 +136,12 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
             </mesh>
         </group>
 
-        {/* Screen Bezel */}
         <mesh position={[0, 0, 0.76]}>
           <RoundedBox args={[2, 1.4, 0.12]} radius={0.3} smoothness={6}>
             <meshStandardMaterial color="#000" roughness={0} metalness={1} />
           </RoundedBox>
         </mesh>
 
-        {/* Digital Face Display */}
         <group position={[0, 0, 0.85]}>
             <mesh ref={leftEyeRef} position={[-0.45, 0, 0]}>
                 <planeGeometry args={[0.42, 0.2]} />
@@ -175,7 +160,6 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
         <pointLight position={[0, 0, 1.5]} distance={4} intensity={10} color={themeColor} />
       </group>
 
-      {/* DRONES / HANDS */}
       <Float speed={4} position={[-2.8, -0.5, 0.8]}>
           <RoundedBox args={[0.6, 0.6, 0.6]} radius={0.1}>
             <meshStandardMaterial color="#080808" metalness={1} roughness={0.1} />
@@ -195,13 +179,10 @@ const ScreenBot = ({ themeColor, globalMouse, scrollProgress }: { themeColor: st
 const Scene3D: React.FC<Scene3DProps> = ({ scrollProgress, theme }) => {
   const groupRef = useRef<THREE.Group>(null);
   const themeColor = useMemo(() => themeColors[theme], [theme]);
-  
-  // Custom mouse tracking to ignore HTML z-index interference
   const globalMouse = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-        // Normalize coordinates from -1 to 1
         globalMouse.current.x = (e.clientX / window.innerWidth) * 2 - 1;
         globalMouse.current.y = (e.clientY / window.innerHeight) * 2 - 1;
     };
@@ -209,12 +190,9 @@ const Scene3D: React.FC<Scene3DProps> = ({ scrollProgress, theme }) => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (groupRef.current) {
-      // Dynamic positioning based on scroll progress
       const visibility = Math.max(0, 1 - scrollProgress * 4);
-      
-      // Bot starts prominent at center-right, pushes back and fades on scroll
       const targetX = 4 - (scrollProgress * 15);
       const targetY = -0.5;
       const targetZ = -3 - (scrollProgress * 25);
@@ -237,12 +215,10 @@ const Scene3D: React.FC<Scene3DProps> = ({ scrollProgress, theme }) => {
         <ScreenBot 
           themeColor={themeColor} 
           globalMouse={globalMouse} 
-          scrollProgress={scrollProgress} 
         />
         <Sparkles count={100} scale={15} size={3} speed={0.6} color={themeColor} opacity={0.4} />
       </group>
 
-      {/* HIGH-FIDELITY SCENE LIGHTING */}
       <ambientLight intensity={1.2} />
       <spotLight 
         position={[30, 40, 30]} 

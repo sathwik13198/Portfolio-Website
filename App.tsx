@@ -1,5 +1,7 @@
 
-import React, { Suspense, useState, useEffect, useRef } from 'react';
+"use client";
+
+import React, { Suspense, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Preload, Environment } from '@react-three/drei';
 import Scene3D from './components/Scene3D';
@@ -18,7 +20,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrolled = window.scrollY / scrollHeight;
+      const scrolled = window.scrollY / (scrollHeight || 1);
       setScrollProgress(scrolled);
     };
 
@@ -33,7 +35,7 @@ const App: React.FC = () => {
   return (
     <div className="relative w-full bg-[#050505]">
       
-      {/* FIXED 3D BACKGROUND - Z-INDEX 0 ensures it is the base layer */}
+      {/* FIXED 3D BACKGROUND */}
       <div className="fixed inset-0 w-full h-screen z-0 overflow-hidden">
         <Canvas 
           shadows
@@ -48,7 +50,7 @@ const App: React.FC = () => {
         </Canvas>
       </div>
 
-      {/* SCROLLABLE HTML CONTENT - Z-INDEX 10 ensures it is above the 3D scene */}
+      {/* SCROLLABLE HTML CONTENT */}
       <div className="relative z-10 w-full">
         <ContentOverlay 
           scrollProgress={scrollProgress} 

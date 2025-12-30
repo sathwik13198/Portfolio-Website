@@ -1,5 +1,5 @@
 // DO fix: Always use import {GoogleGenAI} from "@google/genai";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { RESUME_DATA } from '../constants';
 import type { ChatMessage } from '../types';
 
@@ -15,29 +15,30 @@ ${JSON.stringify(RESUME_DATA, null, 2)}
  * DO: Initialize GoogleGenAI right before use to ensure up-to-date API key usage.
  */
 export const getChatbotResponse = async (message: string, history: ChatMessage[]): Promise<string> => {
-  const apiKey = process.env.API_KEY;
-  if (!apiKey) {
+  // DO fix: Access process.env.API_KEY directly and ensure it exists
+  if (!process.env.API_KEY) {
     console.error("API_KEY environment variable not set!");
     return "I'm currently running in offline mode as the AI service isn't configured. If I were online, you could ask me questions like:\n\n- 'What technologies is Sathwik skilled in?'\n- 'Tell me about his internship at ISRO.'\n- 'What did he do for the Smart Meds project?'\n\nPlease contact the site owner to enable the full AI experience.";
   }
 
   try {
-    // DO fix: Create a new GoogleGenAI instance right before making an API call
-    const ai = new GoogleGenAI({ apiKey });
+    // DO fix: Create a new GoogleGenAI instance right before making an API call to ensure current key usage
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
     
     // Map existing history to the format expected by the SDK
-    // The history parameter is expected to include the current user turn as the last element.
     const contents = history.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: msg.parts.map(p => ({ text: p.text }))
     }));
 
-    // DO fix: Use ai.models.generateContent to query GenAI with both the model name and contents
-    const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+    // DO fix: Use ai.models.generateContent with gemini-3-pro-preview for complex reasoning tasks
+    const response: GenerateContentResponse = await ai.models.generateContent({
+        model: 'gemini-3-pro-preview',
         contents: contents,
         config: {
             systemInstruction: systemInstruction,
+            temperature: 0.7,
+            topP: 0.95,
         },
     });
 

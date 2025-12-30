@@ -1,5 +1,7 @@
 
-import React, { useRef, useEffect, useState, useMemo, ReactNode, RefObject } from 'react';
+"use client";
+
+import React, { useRef, useEffect, useMemo, RefObject } from 'react';
 import { RESUME_DATA, PROJECTS_DATA } from '../constants';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -39,10 +41,8 @@ interface ScrollRevealProps {
 
 const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
-  scrollContainerRef,
   enableBlur = true,
   baseOpacity = 0.05,
-  baseRotation = 2,
   blurStrength = 8,
   containerClassName = '',
   textClassName = '',
@@ -105,9 +105,6 @@ const Section: React.FC<{ children: React.ReactNode; className?: string; id?: st
 );
 
 const ProjectCard3D: React.FC<{ project: any }> = ({ project }) => {
-    const cardRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLDivElement>(null);
-
     const IconComponent = (() => {
         switch (project.id) {
             case 'leetmate': return IconLeetMate;
@@ -124,10 +121,9 @@ const ProjectCard3D: React.FC<{ project: any }> = ({ project }) => {
 
     return (
         <div 
-            ref={cardRef}
             className="group relative glass-card p-8 rounded-3xl border border-white/5 hover:border-[var(--accent)] transition-all duration-500 cursor-pointer overflow-hidden flex flex-col h-full bg-black/40 backdrop-blur-xl"
         >
-            <div ref={contentRef} className="flex flex-col h-full relative z-10">
+            <div className="flex flex-col h-full relative z-10">
                 <div className="flex items-center space-x-4 mb-6">
                     <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center accent-text group-hover:bg-white/10 group-hover:scale-110 transition-all duration-500">
                         <IconComponent className="w-7 h-7" />
@@ -184,10 +180,9 @@ const SkillPill: React.FC<{ skill: string }> = ({ skill }) => {
     );
 };
 
-const ContentOverlay: React.FC<ContentOverlayProps> = ({ scrollProgress, currentTheme, onThemeChange }) => {
+const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeChange }) => {
   useEffect(() => {
-      // Reveal items (General cards)
-      gsap.utils.toArray('.reveal-card').forEach((card: any, i) => {
+      gsap.utils.toArray('.reveal-card').forEach((card: any) => {
           gsap.fromTo(card, 
               { y: 50, opacity: 0, scale: 0.95 }, 
               { 
@@ -205,7 +200,6 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ scrollProgress, current
           );
       });
 
-      // Special Staggered Reveal for Skill Pills
       gsap.utils.toArray('.skill-category-card').forEach((card: any) => {
           const pills = card.querySelectorAll('.skill-pill-item');
           gsap.fromTo(pills,
@@ -226,7 +220,6 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ scrollProgress, current
           );
       });
 
-      // Background parallax
       gsap.to(".bg-parallax-text", {
           y: -150,
           scrollTrigger: {
@@ -331,7 +324,6 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ scrollProgress, current
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pointer-events-auto">
             {RESUME_DATA.skillCategories.map((cat, i) => (
                 <div key={i} className="reveal-card skill-category-card group/cat relative p-8 rounded-[2rem] border border-white/5 bg-black/40 backdrop-blur-2xl transition-all duration-500 hover:border-[var(--accent)]/30 hover:bg-black/60 overflow-hidden">
-                    {/* Scanner Line Animation */}
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover/cat:opacity-50 animate-[scan_3s_linear_infinite] pointer-events-none"></div>
                     
                     <h3 className="text-lg font-bold text-white mb-8 tracking-tight flex items-center gap-3">
@@ -410,15 +402,6 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ scrollProgress, current
           </div>
           <div className="text-center opacity-30">© 2025 SATHWIK PENTAPATI // DIGITAL ARCHITECT</div>
       </footer>
-
-      <style>{`
-        @keyframes scan {
-            0% { transform: translateY(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(400px); opacity: 0; }
-        }
-      `}</style>
     </div>
   );
 };
