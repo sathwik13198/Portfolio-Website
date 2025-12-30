@@ -65,6 +65,32 @@ export const RESUME_DATA = {
       details: "CGPA: 8.9"
     }
   ],
+  skillCategories: [
+    {
+        title: "Languages",
+        items: ["C", "Java", "Python", "HTML5", "JavaScript", "TypeScript"]
+    },
+    {
+        title: "Tools & Platforms",
+        items: ["Git", "AWS", "Docker", "Kubernetes", "AI-assisted coding", "Postman"]
+    },
+    {
+        title: "Technologies & Frameworks",
+        items: ["CSS", "React.js", "Next.js", "Redux", "Vue.js", "Express.js", "Node.js", "MongoDB", "SQL", "Socket.IO"]
+    },
+    {
+        title: "Testing & Security",
+        items: ["JWT", "OAuth", "Secure Coding (OWASP)", "Web Performance Optimization"]
+    },
+    {
+        title: "Operating Systems",
+        items: ["Windows", "Linux"]
+    },
+    {
+        title: "Soft Skills",
+        items: ["Communication", "Problem-solving", "Teamwork", "Adaptability", "Leadership"]
+    }
+  ],
   skills: {
     languages: "TypeScript, JavaScript, Python, Java, Go, C++, SQL",
     distributedSystems: "Node.js, Express.js, FastAPI, Redis (Caching), Apache Kafka, GraphQL, MongoDB, PostgreSQL",
