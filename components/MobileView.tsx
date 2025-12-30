@@ -24,6 +24,7 @@ import DotGrid from './DotGrid';
 
 interface MobileViewProps {
     toggleTheme: () => void;
+    scrollProgress: number;
 }
 
 const navLinks = [
@@ -310,7 +311,7 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS_DATA[0] }> = ({ project }
 };
 
 
-const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
+const MobileView: React.FC<MobileViewProps> = ({ toggleTheme, scrollProgress }) => {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -346,10 +347,10 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
     
     const technicalSkills = [
         { title: "Languages", skills: RESUME_DATA.skills.languages },
-        { title: "Tools & Platforms", skills: RESUME_DATA.skills.toolsAndPlatforms },
-        { title: "Technologies & Frameworks", skills: RESUME_DATA.skills.technologiesAndFrameworks },
-        { title: "Testing & Security", skills: RESUME_DATA.skills.testingAndSecurity },
-        { title: "Operating Systems", skills: RESUME_DATA.skills.operatingSystems },
+        { title: "DevOps & Cloud", skills: RESUME_DATA.skills.devOps },
+        { title: "Distributed Systems", skills: RESUME_DATA.skills.distributedSystems },
+        { title: "Frontend", skills: RESUME_DATA.skills.frontend },
+        { title: "AI & Specialized", skills: RESUME_DATA.skills.aiAndSpecialized },
     ];
 
     return (
@@ -365,6 +366,7 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme }) => {
                     shockStrength={0.2}
                     resistance={250}
                     returnDuration={0.5}
+                    scrollProgress={scrollProgress}
                 />
             </div>
             <div className="relative z-10">

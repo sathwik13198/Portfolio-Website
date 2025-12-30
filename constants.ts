@@ -3,6 +3,13 @@ import React from 'react';
 import type { DockItem } from './types';
 import { IconAbout, IconProjects, IconExperience, IconContact, IconTerminal } from './components/Icon';
 
+export const THEME_COLORS = {
+    primary: "#8b5cf6",
+    secondary: "#c084fc",
+    accent: "#4c1d95",
+    background: "#050505"
+};
+
 export const RESUME_DATA = {
   name: "Sathwik Pentapati",
   title: "Software Engineer - Full Stack Developer",
@@ -41,7 +48,7 @@ export const RESUME_DATA = {
     {
       company: "Falak Fest",
       role: "Technical Committee Member",
-      period: "2024",
+      period: "Feb 2024 - May 2025",
       location: "Bengaluru, India",
       points: [
         "Built and maintained the Falak fest website, managing registration for 500+ users with secure payment gateway integration.",
@@ -54,108 +61,120 @@ export const RESUME_DATA = {
     {
       institution: "Manipal Institute of Technology (MIT) Bengaluru",
       degree: "B.Tech in Computer Science",
-      period: "Aug 2023 - May 2027",
+      period: "2023 - 2027",
       details: "CGPA: 8.9"
+    }
+  ],
+  skillCategories: [
+    {
+        title: "Languages",
+        items: ["C", "Java", "Python", "HTML5", "JavaScript", "TypeScript"]
     },
     {
-      institution: "Narayana Junior College",
-      degree: "Class XII (Intermediate)",
-      period: "2021 - 2023",
-      details: "Percentage: 97.9"
+        title: "Tools & Platforms",
+        items: ["Git", "AWS", "Docker", "Kubernetes", "AI-assisted coding", "Postman"]
     },
     {
-      institution: "Narayana Group of Schools",
-      degree: "Class X (SSC)",
-      period: "2020 - 2021",
-      details: "Percentage: 96.00"
+        title: "Technologies & Frameworks",
+        items: ["CSS", "React.js", "Next.js", "Redux", "Vue.js", "Express.js", "Node.js", "MongoDB", "SQL", "Socket.IO"]
+    },
+    {
+        title: "Testing & Security",
+        items: ["JWT", "OAuth", "Secure Coding (OWASP)", "Web Performance Optimization"]
+    },
+    {
+        title: "Operating Systems",
+        items: ["Windows", "Linux"]
+    },
+    {
+        title: "Soft Skills",
+        items: ["Communication", "Problem-solving", "Teamwork", "Adaptability", "Leadership"]
     }
   ],
   skills: {
-    languages: "C, Java, Python, HTML5, JavaScript, TypeScript",
-    toolsAndPlatforms: "Git, AWS, Docker, Kubernetes, Postman, AI-assisted coding",
-    technologiesAndFrameworks: "React.js, Next.js, Redux, Vue.js, Express.js, Node.js, MongoDB, SQL, Socket.IO, FastAPI",
-    testingAndSecurity: "JWT, OAuth, OWASP, Web Performance Optimization",
-    operatingSystems: "Windows, Linux",
-    softSkills: "Communication, Problem-solving, Teamwork, Adaptability, Leadership"
+    languages: "TypeScript, JavaScript, Python, Java, Go, C++, SQL",
+    distributedSystems: "Node.js, Express.js, FastAPI, Redis (Caching), Apache Kafka, GraphQL, MongoDB, PostgreSQL",
+    frontend: "React.js, Next.js, Redux, Tailwind CSS, Three.js, GSAP, Web Performance Optimization",
+    devOps: "AWS, Docker, Kubernetes, Terraform, GitHub Actions (CI/CD), Prometheus, Grafana",
+    aiAndSpecialized: "LangChain, Vector Databases (Pinecone), RAG Architecture, Google Gemini API, System Design, Microservices, JWT/OAuth, OWASP Security",
+    softSkills: "Technical Leadership, Problem-solving, Adaptability, System Thinking"
   },
   achievements: [
     "HACK'NIGHT 2025 Finalist: Reached the finals in a national-level hackathon, showcasing innovative full-stack solutions.",
     "Certifications: Meta Back-End Developer Specialization, Java and Object-Oriented Programming, AWS Cloud Practitioner, IBM Linux.",
-    "1st Prize - State-Level Badminton: Demonstrated discipline and competitiveness in state sports events.",
-    "NSS Volunteer: Coordinated and led large-scale events and technical workshops."
+    "1st Prize - State-Level Badminton: Demonstrated discipline and competitiveness in state sports events."
   ]
 };
 
 export const PROJECTS_DATA = [
     {
-        name: "CodeGuardian AI",
-        tech: "React, TypeScript, Google Gemini API, GitHub REST API, Firebase Firestore, Tailwind CSS",
+        id: "cryptography",
+        name: "Visual Cryptography System",
+        tech: "Python, OpenCV, AES, NumPy",
         points: [
-            "Built an AI-driven code analysis platform to automate PR reviews with security and performance insights.",
-            "Engineered a \"Chat with Repo\" LLM interface using tool-calling and RAG-style queries."
+            "Implemented a visual cryptography scheme to split images into secure shares that reconstruct when stacked.",
+            "Supported binary, grayscale, and colored image encryption with AES + pixel-level operations.",
+            "Optimized performance using NumPy for matrix-based image transformations."
         ]
     },
     {
-        name: "Smart Meds (AI Hospital System)",
-        tech: "React, FastAPI, PostgreSQL, JWT Authentication, VADER NLP, OpenAI GPT-4 API",
+        id: "leetmate",
+        name: "LeetMate AI Extension",
+        tech: "React, Chrome APIs, Webpack, Gemini AI",
         points: [
-            "Developed an AI-powered hospital management system featuring a GPT-4 medical chatbot, automated appointment scheduling, and real-time ADR monitoring.",
-            "Built scalable FastAPI + PostgreSQL backend services optimized for high-traffic medical workflows.",
-            "Implemented role-based access control for doctors, patients, and administrators."
+            "Built a Manifest V3 Chrome extension generating code solutions and human-friendly explanations for LeetCode problems.",
+            "Engineered context-aware prompt injection for sub-1s latency AI responses.",
+            "Designed a floating overlay UI with React for seamless user interaction."
         ]
     },
     {
-        name: "LeetMate (AI-Powered Coding Helper)",
-        tech: "React.js, Chrome Extension APIs, Webpack, Gemini 2.5 Flash API, Prism.js, Manifest V3",
+        id: "chatbot",
+        name: "Modular Conversational Engine",
+        tech: "Node.js, WebSockets, Python, NLP",
         points: [
-            "Developed a Chrome extension that generates AI-powered solutions for LeetCode problems with emoji-rich explanations.",
-            "Integrated Gemini 2.5 Flash API to provide real-time, multi-language solutions.",
-            "Designed the UI in React, integrated with browser APIs for injection and context handling."
+            "Developed an integratable chatbot system handling stateful conversations and session management.",
+            "Integrated custom NLP fallbacks for domain-specific query handling in offline environments.",
+            "Built a lightweight SDK for embedding the engine into React and Vue frontends."
         ]
     },
     {
-        name: "CrowdConnect (Startup & Creator Platform)",
-        tech: "MongoDB, Express.js, React.js, Node.js, Stripe API",
-        points: [
-            "Developed a full MERN web app where startups can raise funds and creators can monetize exclusive content.",
-            "Integrated Stripe for secure payments, subscription/campaign modules, and built user profiles with dashboard analytics.",
-            "Implemented content gating and funding tracking modules."
-        ]
-    },
-    {
-        name: "Visual Cryptography System for Images",
-        tech: "Python, OpenCV, AES, Cryptography libraries",
-        points: [
-            "Implemented a visual cryptography scheme to split an image into shares such that stacking them reconstructs the original image.",
-            "Supported multiple modes: binary, grayscale, colored image encryption/decryption.",
-            "Employed AES + pixel-level operations to enhance security and measured quality using PSNR and SSIM."
-        ]
-    },
-    {
-        name: "Integratable Chatbot Engine",
-        tech: "Python, Node.js, REST/WebSocket APIs, AI/NLP libraries",
-        points: [
-            "Developed a modular chatbot system that can be integrated into existing apps/websites.",
-            "Handled authentication, session management, fallback responses, and stateful conversation flow.",
-            "Provided endpoints and SDK for seamless embedding into frontend applications."
-        ]
-    },
-    {
+        id: "access",
         name: "Blend Access Helper",
-        tech: "TypeScript, JavaScript, Utility Library Architecture",
+        tech: "TypeScript, RBAC, Library Design",
         points: [
-            "Created a helper/utility module to centralize access control and permission logic across multiple services.",
-            "Abstracted common patterns to reduce repetition and improve consistency in controlling user capabilities.",
-            "Designed as a distributed package for reuse across various enterprise-level projects."
+            "Created a centralized utility module for complex permission logic across distributed microservices.",
+            "Reduced role-check boilerplate by 60% through a declarative access control architecture.",
+            "Implemented high-performance caching for token-based permission lookups."
         ]
     },
     {
-        name: "Interview Escaler Platform",
-        tech: "React, Node.js, PostgreSQL, Socket.IO",
+        id: "interview",
+        name: "Interview Escaler",
+        tech: "Next.js, PostgreSQL, Node.js",
         points: [
-            "Built a full-stack platform to help users escalate or scale their interview preparations.",
-            "Features included curated questions, mock interview modules, scheduling, and real-time feedback systems.",
-            "Implemented backend APIs, responsive UI, and robust data persistence."
+            "Built a full-stack platform for scaling mock interview preparations with feedback modules.",
+            "Implemented real-time progress tracking and curated question banks for SDE-II level prep.",
+            "Engineered a scalable backend capable of handling concurrent video-based mock sessions."
+        ]
+    },
+    {
+        id: "crowdconnect",
+        name: "CrowdConnect",
+        tech: "MERN Stack, Stripe API, Socket.IO",
+        points: [
+            "Developed a startup & creator platform where creators monetize content through exclusive gating.",
+            "Integrated Stripe for multi-tier subscriptions and campaign funding management.",
+            "Built real-time dashboard analytics for monitoring funding progress and audience engagement."
+        ]
+    },
+    {
+        id: "smartmeds",
+        name: "Smart Meds AI Hospital",
+        tech: "FastAPI, React, SQL, VADER NLP, LLM",
+        points: [
+            "Architected a medical platform for appointment scheduling and Adverse Drug Reaction tracking.",
+            "Built an AI triage chatbot using NLP sentiment analysis to prioritize urgent medical cases.",
+            "Secured medical records using JWT-based role-based access control for doctors and patients."
         ]
     }
 ];

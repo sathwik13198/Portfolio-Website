@@ -6,12 +6,13 @@ import MenuBar from './MenuBar';
 import Dock from './Dock';
 import Window from './Window';
 import Terminal from './Terminal';
-import { SkillIcon, IconEducation } from './SkillIcons';
+import { IconEducation } from './SkillIcons';
 import DotGrid from './DotGrid';
 import ResumeContent from './ResumeContent';
 
 interface DesktopViewProps {
     toggleTheme: () => void;
+    scrollProgress: number;
 }
 
 interface TypingAnimationProps {
@@ -88,10 +89,11 @@ const AboutContent: React.FC = () => {
     const skills = RESUME_DATA.skills;
     const skillCategories = [
         { title: "Languages", skills: skills.languages.split(', ') },
-        { title: "Technologies & Frameworks", skills: skills.technologiesAndFrameworks.split(', ') },
-        { title: "Tools & Platforms", skills: skills.toolsAndPlatforms.split(', ') },
+        { title: "Distributed Systems", skills: skills.distributedSystems.split(', ') },
+        { title: "Frontend", skills: skills.frontend.split(', ') },
+        { title: "DevOps", skills: skills.devOps.split(', ') },
+        { title: "AI & Specialized", skills: skills.aiAndSpecialized.split(', ') },
     ];
-    let skillDelay = 0;
 
     return (
         <div className="p-6 bg-gray-100/80 dark:bg-gray-900/80 h-full overflow-y-auto text-gray-800 dark:text-gray-200 space-y-8">
@@ -121,20 +123,15 @@ const AboutContent: React.FC = () => {
                     return (
                         <div key={category.title} className="mb-6">
                             <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">{category.title}</h3>
-                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
-                                {category.skills.map((skill) => {
-                                    skillDelay += 0.03;
-                                    return (
-                                        <div 
-                                            key={skill} 
-                                            className="skill-item flex flex-col items-center justify-center p-3 bg-white/50 dark:bg-black/20 rounded-lg text-center transition-transform transform hover:scale-110"
-                                            style={{ animationDelay: `${skillDelay}s` }}
-                                        >
-                                            <SkillIcon skill={skill} />
-                                            <span className="mt-2 text-xs font-medium text-gray-700 dark:text-gray-300">{skill}</span>
-                                        </div>
-                                    );
-                                })}
+                            <div className="flex flex-wrap gap-2">
+                                {category.skills.map((skill) => (
+                                    <div 
+                                        key={skill} 
+                                        className="px-4 py-2 bg-white/50 dark:bg-black/20 rounded-full border border-gray-300 dark:border-gray-700 hover:border-[var(--accent)] transition-all duration-300 cursor-default"
+                                    >
+                                        <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{skill}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     )
@@ -145,7 +142,7 @@ const AboutContent: React.FC = () => {
 };
 
 
-const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
+const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme, scrollProgress }) => {
   const [windows, setWindows] = useState<WindowProps[]>([]);
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
 
@@ -282,6 +279,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
                 shockStrength={0.2}
                 resistance={250}
                 returnDuration={0.5}
+                scrollProgress={scrollProgress}
             />
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
