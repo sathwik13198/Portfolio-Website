@@ -12,6 +12,7 @@ import ResumeContent from './ResumeContent';
 
 interface DesktopViewProps {
     toggleTheme: () => void;
+    scrollProgress: number;
 }
 
 interface TypingAnimationProps {
@@ -88,8 +89,10 @@ const AboutContent: React.FC = () => {
     const skills = RESUME_DATA.skills;
     const skillCategories = [
         { title: "Languages", skills: skills.languages.split(', ') },
-        { title: "Technologies & Frameworks", skills: skills.technologiesAndFrameworks.split(', ') },
-        { title: "Tools & Platforms", skills: skills.toolsAndPlatforms.split(', ') },
+        { title: "Distributed Systems", skills: skills.distributedSystems.split(', ') },
+        { title: "Frontend", skills: skills.frontend.split(', ') },
+        { title: "DevOps", skills: skills.devOps.split(', ') },
+        { title: "AI & Specialized", skills: skills.aiAndSpecialized.split(', ') },
     ];
     let skillDelay = 0;
 
@@ -145,7 +148,7 @@ const AboutContent: React.FC = () => {
 };
 
 
-const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
+const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme, scrollProgress }) => {
   const [windows, setWindows] = useState<WindowProps[]>([]);
   const [activeWindowId, setActiveWindowId] = useState<string | null>(null);
 
@@ -282,6 +285,7 @@ const DesktopView: React.FC<DesktopViewProps> = ({ toggleTheme }) => {
                 shockStrength={0.2}
                 resistance={250}
                 returnDuration={0.5}
+                scrollProgress={scrollProgress}
             />
         </div>
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">

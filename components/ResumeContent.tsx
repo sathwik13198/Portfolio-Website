@@ -45,21 +45,26 @@ const ResumeContent: React.FC = () => {
                 <section className="mb-8">
                     <h3 className="text-xl md:text-2xl font-bold mb-4 pb-2 border-b border-gray-200 dark:border-gray-700">Skills</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                        {/* Fixed: Use existing skill properties from constants.ts */}
                         <div>
                             <h4 className="font-semibold text-gray-800 dark:text-gray-100">Languages</h4>
                             <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.languages}</p>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">Technologies & Frameworks</h4>
-                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.technologiesAndFrameworks}</p>
+                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">Distributed Systems & Backend</h4>
+                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.distributedSystems}</p>
                         </div>
                          <div>
-                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">Tools & Platforms</h4>
-                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.toolsAndPlatforms}</p>
+                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">Frontend Development</h4>
+                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.frontend}</p>
                         </div>
                          <div>
-                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">Testing & Security</h4>
-                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.testingAndSecurity}</p>
+                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">DevOps & Cloud</h4>
+                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.devOps}</p>
+                        </div>
+                        <div className="md:col-span-2">
+                            <h4 className="font-semibold text-gray-800 dark:text-gray-100">AI & Specialized Engineering</h4>
+                            <p className="text-gray-600 dark:text-gray-300">{RESUME_DATA.skills.aiAndSpecialized}</p>
                         </div>
                     </div>
                 </section>
