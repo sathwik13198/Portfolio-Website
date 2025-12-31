@@ -1,0 +1,5 @@
+{
+  "name": "Sathwik Pentapati - macOS Portfolio",
+  "description": "An interactive portfolio website designed to mimic a macOS desktop environment, complete with a functional dock, draggable windows, and an AI-powered terminal chatbot to answer questions about my resume.",
+  "requestFramePermissions": []
+}
