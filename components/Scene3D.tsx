@@ -91,7 +91,7 @@ const ScreenBot = ({ themeColor, globalMouse }: { themeColor: string, globalMous
           <div className="bg-black/80 backdrop-blur-2xl border border-white/20 px-5 py-3 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] animate-bounce transition-all">
             <p className="text-white font-mono text-xs tracking-widest uppercase flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              HELLO 👋 WORLD_
+              HELLO WORLD
             </p>
           </div>
         </Html>
