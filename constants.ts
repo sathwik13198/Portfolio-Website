@@ -16,7 +16,7 @@ export const RESUME_DATA = {
   contact: {
     phone: "+91 9666713198",
     email: "sathwikpentapati@gmail.com",
-    linkedin: "https://www.linkedin.com/in/sathwik-pentapati/",
+    linkedin: "https://www.linkedin.com/in/sathwikpentapati/",
     github: "https://github.com/sathwik13198",
     leetcode: "https://leetcode.com/u/VPTDJzmOny/"
   },
