@@ -61,8 +61,20 @@ export const RESUME_DATA = {
     {
       institution: "Manipal Institute of Technology (MIT) Bengaluru",
       degree: "B.Tech in Computer Science",
-      period: "2023 - 2027",
+      period: "Aug 2023 - May 2027",
       details: "CGPA: 8.9"
+    },
+    {
+      institution: "Narayana Junior College",
+      degree: "Class XII (Intermediate)",
+      period: "2021 - 2023",
+      details: "Percentage: 97.9"
+    },
+    {
+      institution: "Narayana Group of Schools",
+      degree: "Class X (SSC)",
+      period: "2020 - 2021",
+      details: "Percentage: 96.00"
     }
   ],
   skillCategories: [
@@ -175,6 +187,16 @@ export const PROJECTS_DATA = [
             "Architected a medical platform for appointment scheduling and Adverse Drug Reaction tracking.",
             "Built an AI triage chatbot using NLP sentiment analysis to prioritize urgent medical cases.",
             "Secured medical records using JWT-based role-based access control for doctors and patients."
+        ]
+    },
+    {
+        id: "codeguardian",
+        name: "CodeGuardian AI",
+        tech: "React, TypeScript, Gemini API, Firebase, GitHub API",
+        points: [
+            "Built an AI-powered GitHub assistant to automate pull-request reviews, repository analysis, and merge-conflict resolution.",
+            "Implemented intelligent PR diff analysis with structured review comments, caching results using Firestore to reduce API usage and latency.",
+            "Engineered a repository chat experience with dynamic file exploration, syntax-highlighted code responses, and audio summaries for rapid codebase understanding."
         ]
     }
 ];

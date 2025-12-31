@@ -16,6 +16,8 @@ export type ThemeType = 'violet' | 'crimson' | 'emerald' | 'amber' | 'monochrome
 const App: React.FC = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [theme, setTheme] = useState<ThemeType>('violet');
+  const [buttonHovered, setButtonHovered] = useState(false);
+  const [sayHiClicked, setSayHiClicked] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +45,13 @@ const App: React.FC = () => {
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         >
           <Suspense fallback={null}>
-            <Scene3D scrollProgress={scrollProgress} theme={theme} />
+            <Scene3D 
+              scrollProgress={scrollProgress} 
+              theme={theme}
+              buttonHovered={buttonHovered}
+              sayHiClicked={sayHiClicked}
+              onSayHiComplete={() => setSayHiClicked(false)}
+            />
             <Environment preset="night" />
             <Preload all />
           </Suspense>
@@ -55,7 +63,9 @@ const App: React.FC = () => {
         <ContentOverlay 
           scrollProgress={scrollProgress} 
           currentTheme={theme} 
-          onThemeChange={setTheme} 
+          onThemeChange={setTheme}
+          onButtonHover={setButtonHovered}
+          onSayHiClick={() => setSayHiClicked(true)}
         />
       </div>
 

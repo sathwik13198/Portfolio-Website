@@ -291,19 +291,24 @@ const ProjectCard: React.FC<{ project: typeof PROJECTS_DATA[0] }> = ({ project }
     }, [project.name]);
 
     return (
-        <div className="project-card animated-card bg-white/10 dark:bg-black/20 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 dark:border-black/20 shadow-md">
+        <div className="project-card animated-card glass-card bg-white/5 dark:bg-black/20 backdrop-blur-xl rounded-2xl overflow-hidden border border-gray-200/20 dark:border-gray-700/30 hover:border-gray-300/40 dark:hover:border-gray-600/40 shadow-md hover:shadow-xl transition-all duration-300 active:scale-[0.98]">
             <div className="p-6">
-                <div className="flex items-center gap-4">
-                    <div className="flex-shrink-0 w-16 h-16 bg-blue-500/10 dark:bg-blue-400/10 rounded-lg flex items-center justify-center">
-                        <ProjectIcon className="w-10 h-10 text-blue-500 dark:text-blue-400" />
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500/20 to-purple-500/20 dark:from-blue-400/20 dark:to-purple-400/20 rounded-xl flex items-center justify-center border border-blue-500/20 dark:border-blue-400/20">
+                        <ProjectIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <div>
-                        <h4 className="text-xl font-bold text-gray-900 dark:text-white">{project.name}</h4>
-                        <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1">{project.tech}</p>
+                    <div className="flex-1 min-w-0">
+                        <h4 className="text-xl font-bold text-gray-900 dark:text-white truncate">{project.name}</h4>
+                        <p className="text-sm font-medium text-blue-600 dark:text-blue-400 mt-1 truncate">{project.tech}</p>
                     </div>
                 </div>
-                <ul className="list-disc list-inside mt-4 space-y-1 text-gray-600 dark:text-gray-300 text-sm">
-                    {project.points.map((point, i) => <li key={i}>{point}</li>)}
+                <ul className="list-none space-y-2 text-gray-600 dark:text-gray-300 text-sm">
+                    {project.points.map((point, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                            <span className="text-blue-500 dark:text-blue-400 mt-1.5 flex-shrink-0">▹</span>
+                            <span>{point}</span>
+                        </li>
+                    ))}
                 </ul>
             </div>
         </div>
@@ -373,9 +378,13 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme, scrollProgress }) 
                 <MobileNav toggleTheme={toggleTheme} />
 
                 <main className="max-w-4xl mx-auto px-4 sm:px-6 md:px-8">
-                    <header className="min-h-screen flex flex-col justify-center text-center">
-                        <div className="header-content">
-                            <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight">
+                    <header className="min-h-screen flex flex-col justify-center text-center relative overflow-hidden">
+                        {/* Animated background gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-transparent opacity-50"></div>
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(139,92,246,0.1),transparent_50%)]"></div>
+                        
+                        <div className="header-content relative z-10">
+                            <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 dark:text-white leading-tight mb-2 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-100 dark:to-white bg-clip-text text-transparent">
                                 Sathwik Pentapati
                             </h1>
                             <TypingAnimation
@@ -383,30 +392,49 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme, scrollProgress }) 
                                 prefix="Software Developer - "
                                 className="text-xl sm:text-2xl font-semibold text-blue-500 dark:text-blue-400 mt-4 h-8"
                             />
-                            <div className="mt-8 flex justify-center space-x-6">
-                                <a href={`mailto:${RESUME_DATA.contact.email}`} className="contact-icon text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-115" aria-label="Email"><IconEmail className="w-7 h-7" /></a>
-                                <a href={RESUME_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="contact-icon text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-115" aria-label="LinkedIn"><IconLinkedIn className="w-7 h-7" /></a>
-                                <a href={RESUME_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="contact-icon text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-all duration-300 hover:scale-115" aria-label="GitHub"><IconGitHub className="w-7 h-7" /></a>
+                            <p className="mt-6 text-gray-600 dark:text-gray-300 text-base sm:text-lg max-w-2xl mx-auto px-4 leading-relaxed">
+                                Engineering robust digital architectures and high-availability AI systems with a focus on seamless human-centric design.
+                            </p>
+                            <div className="mt-10 flex justify-center space-x-6">
+                                <a href={`mailto:${RESUME_DATA.contact.email}`} className="contact-icon group relative p-3 rounded-full bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/50 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-lg" aria-label="Email">
+                                    <IconEmail className="w-6 h-6" />
+                                    <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">Email</span>
+                                </a>
+                                <a href={RESUME_DATA.contact.linkedin} target="_blank" rel="noopener noreferrer" className="contact-icon group relative p-3 rounded-full bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/50 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-lg" aria-label="LinkedIn">
+                                    <IconLinkedIn className="w-6 h-6" />
+                                    <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">LinkedIn</span>
+                                </a>
+                                <a href={RESUME_DATA.contact.github} target="_blank" rel="noopener noreferrer" className="contact-icon group relative p-3 rounded-full bg-white/10 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/20 dark:border-gray-700/50 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/50 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-lg" aria-label="GitHub">
+                                    <IconGitHub className="w-6 h-6" />
+                                    <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">GitHub</span>
+                                </a>
                             </div>
                         </div>
                     </header>
 
                     <div className="space-y-24 pb-24">
                         <section id="about" className="mobile-section">
-                            <h3 className="animated-card text-3xl font-bold mb-6 pb-2 border-b-2 border-gray-200 dark:border-gray-700">About Me</h3>
-                            <p className="animated-card text-gray-600 dark:text-gray-300 text-lg leading-relaxed">I am a passionate Full Stack Developer with experience in building scalable web applications using technologies like React, Node.js, and modern cloud platforms. I thrive in collaborative environments and I am always eager to learn and apply new skills to solve complex problems.</p>
+                            <div className="animated-card glass-card p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-gray-200/20 dark:border-gray-700/30 hover:border-gray-300/40 dark:hover:border-gray-600/40 transition-all duration-300">
+                                <h3 className="text-3xl font-bold mb-6 pb-3 border-b-2 border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">About Me</h3>
+                                <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg leading-relaxed">I am a passionate Full Stack Developer with experience in building scalable web applications using technologies like React, Node.js, and modern cloud platforms. I thrive in collaborative environments and I am always eager to learn and apply new skills to solve complex problems.</p>
+                            </div>
                         </section>
                         
                         <section id="experience" className="mobile-section">
-                            <h3 className="animated-card text-3xl font-bold mb-6 pb-2 border-b-2 border-gray-200 dark:border-gray-700">Experience</h3>
-                            <div className="space-y-8">
+                            <h3 className="animated-card text-3xl font-bold mb-8 pb-3 border-b-2 border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Experience</h3>
+                            <div className="space-y-6">
                                 {RESUME_DATA.experience.map((exp) => (
-                                    <div key={exp.company + exp.role} className="animated-card">
-                                        <p className="text-xl font-semibold text-gray-900 dark:text-white">{exp.role}</p>
-                                        <p className="text-lg font-medium text-gray-700 dark:text-gray-300">{exp.company}</p>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">{exp.period} | {exp.location}</p>
-                                        <ul className="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-300">
-                                            {exp.points.map((point, i) => <li key={i}>{point}</li>)}
+                                    <div key={exp.company + exp.role} className="animated-card glass-card p-5 sm:p-6 rounded-2xl backdrop-blur-xl border border-gray-200/20 dark:border-gray-700/30 hover:border-gray-300/40 dark:hover:border-gray-600/40 transition-all duration-300 hover:shadow-lg active:scale-[0.98]">
+                                        <p className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{exp.role}</p>
+                                        <p className="text-lg font-medium text-blue-600 dark:text-blue-400 mb-2">{exp.company}</p>
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 font-mono">{exp.period} | {exp.location}</p>
+                                        <ul className="list-none space-y-2 text-gray-600 dark:text-gray-300 text-sm">
+                                            {exp.points.map((point, i) => (
+                                                <li key={i} className="flex items-start gap-2">
+                                                    <span className="text-blue-500 dark:text-blue-400 mt-1.5 flex-shrink-0">▹</span>
+                                                    <span>{point}</span>
+                                                </li>
+                                            ))}
                                         </ul>
                                     </div>
                                 ))}
@@ -423,7 +451,7 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme, scrollProgress }) 
                         </section>
                         
                         <section id="skills" className="mobile-section">
-                            <h3 className="animated-card text-3xl font-bold mb-8 pb-2 border-b-2 border-gray-200 dark:border-gray-700">Skills</h3>
+                            <h3 className="animated-card text-3xl font-bold mb-8 pb-3 border-b-2 border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Skills</h3>
                             
                             <div className="mb-12 animated-card">
                                 <h4 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100 text-center sm:text-left">Technical Skills</h4>
@@ -460,15 +488,32 @@ const MobileView: React.FC<MobileViewProps> = ({ toggleTheme, scrollProgress }) 
                         </section>
 
                         <section className="mobile-section">
-                            <h3 className="animated-card text-3xl font-bold mb-6 pb-2 border-b-2 border-gray-200 dark:border-gray-700">Education</h3>
-                            <div className="space-y-6">
+                            <h3 className="animated-card text-3xl font-bold mb-8 pb-3 border-b-2 border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Education</h3>
+                            <div className="space-y-4">
                             {RESUME_DATA.education.map((edu, index) => (
-                                 <div key={index} className="animated-card">
-                                    <p className="text-xl font-semibold text-gray-900 dark:text-white">{edu.degree}</p>
-                                    <p className="text-lg font-medium text-gray-700 dark:text-gray-300">{edu.institution}</p>
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">{edu.period} | {edu.details}</p>
+                                 <div key={index} className="animated-card glass-card p-5 sm:p-6 rounded-2xl backdrop-blur-xl border border-gray-200/20 dark:border-gray-700/30 hover:border-gray-300/40 dark:hover:border-gray-600/40 transition-all duration-300 hover:shadow-lg active:scale-[0.98]">
+                                    <p className="text-xl font-semibold text-gray-900 dark:text-white mb-1">{edu.degree}</p>
+                                    <p className="text-lg font-medium text-blue-600 dark:text-blue-400 mb-2">{edu.institution}</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400 font-mono">{edu.period} | {edu.details}</p>
                                 </div>
                             ))}
+                            </div>
+                        </section>
+
+                        <section className="mobile-section">
+                            <div className="animated-card glass-card p-6 sm:p-8 rounded-2xl backdrop-blur-xl border border-gray-200/20 dark:border-gray-700/30 hover:border-gray-300/40 dark:hover:border-gray-600/40 transition-all duration-300 text-center">
+                                <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Resume</h3>
+                                <p className="text-gray-600 dark:text-gray-400 mb-6">Download my resume for detailed information</p>
+                                <a 
+                                    href="/SathwikPentapati_resume.pdf" 
+                                    download="Sathwik_Pentapati_Resume.pdf"
+                                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    <span>Download Resume PDF</span>
+                                </a>
                             </div>
                         </section>
                     </div>

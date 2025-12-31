@@ -26,6 +26,8 @@ interface ContentOverlayProps {
   scrollProgress: number;
   currentTheme: ThemeType;
   onThemeChange: (theme: ThemeType) => void;
+  onButtonHover: (hovered: boolean) => void;
+  onSayHiClick: () => void;
 }
 
 interface ScrollRevealProps {
@@ -180,7 +182,7 @@ const SkillPill: React.FC<{ skill: string }> = ({ skill }) => {
     );
 };
 
-const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeChange }) => {
+const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeChange, onButtonHover, onSayHiClick }) => {
   useEffect(() => {
       gsap.utils.toArray('.reveal-card').forEach((card: any) => {
           gsap.fromTo(card, 
@@ -240,20 +242,46 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeCh
       {/* HERO */}
       <Section className="relative z-10">
         <div className="flex flex-col items-center md:items-start text-center md:text-left pointer-events-none">
-          <p className="accent-text font-mono text-[10px] tracking-[0.5em] uppercase mb-4 opacity-70">Interface Active // v4.1</p>
+          <p className="accent-text font-mono text-[10px] tracking-[0.5em] uppercase mb-4 opacity-70 hover:opacity-100 transition-opacity duration-300 hover-glow cursor-default">Interface Active // v4.1</p>
           <h1 className="text-7xl md:text-9xl font-bold tracking-tighter leading-none mb-6 text-white drop-shadow-2xl">
-            SATHWIK<br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-white/90 via-[var(--accent)] to-white/90">PENTAPATI</span>
+            <span className="inline-block transition-all duration-300 hover:scale-105 hover-glow cursor-default">SATHWIK</span>
+            <br/>
+            <span className="inline-block relative text-transparent bg-clip-text bg-gradient-to-r from-white/90 via-[var(--accent)] to-white/90 transition-all duration-300 hover:scale-105 cursor-default">
+              <span className="absolute inset-0 bg-gradient-to-r from-white/90 via-[var(--accent)] to-white/90 bg-clip-text text-transparent blur-sm opacity-50 hover:opacity-75 transition-opacity duration-300"></span>
+              <span className="relative bg-gradient-to-r from-white/90 via-[var(--accent)] to-white/90 bg-clip-text text-transparent hover-glow" style={{backgroundSize: '200% 100%'}}>PENTAPATI</span>
+            </span>
           </h1>
-          <p className="max-w-lg text-lg text-gray-300 font-light leading-relaxed bg-black/20 p-4 rounded-xl backdrop-blur-sm pointer-events-auto">
+          <p className="max-w-lg text-lg text-gray-300 font-light leading-relaxed bg-black/20 p-4 rounded-xl backdrop-blur-sm pointer-events-auto border border-transparent hover:border-white/10 hover:bg-black/30 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.1)] transition-all duration-300 cursor-default">
             Engineering robust digital architectures and high-availability AI systems with a focus on seamless human-centric design.
           </p>
           <div className="mt-12 flex items-center space-x-6 pointer-events-auto">
-              <a href="#experience" className="group relative px-8 py-3 overflow-hidden rounded-full border border-white/10 hover:border-[var(--accent)] transition-all bg-white/5">
-                  <span className="relative z-10 font-bold text-sm text-white">Review Career Log</span>
+              <a 
+                href="#experience" 
+                className="group relative px-8 py-3 overflow-hidden rounded-full border border-white/10 hover:border-[var(--accent)] transition-all bg-white/5 hover:bg-white/10 hover:scale-105 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.4)] active:scale-95"
+                onMouseEnter={() => onButtonHover(true)}
+                onMouseLeave={() => onButtonHover(false)}
+              >
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--accent)]/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shimmer transition-opacity duration-300"></span>
+                  <span className="relative z-10 font-bold text-sm text-white flex items-center gap-2">
+                    Review Career Log
+                    <svg className="w-4 h-4 transform translate-x-0 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </span>
               </a>
-              <div className="flex items-center space-x-2 text-xs font-mono text-gray-400">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>SYNC_ESTABLISHED</span>
+              <button
+                onClick={onSayHiClick}
+                className="group relative px-6 py-3 overflow-hidden rounded-full border border-white/10 hover:border-[var(--accent)] transition-all bg-white/5 hover:bg-white/10 hover:scale-105 hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.4)] active:scale-95 glass-card backdrop-blur-sm"
+                aria-label="Say Hi to robot"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--accent)]/20 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-shimmer transition-opacity duration-300"></span>
+                <span className="relative z-10 font-bold text-sm text-white flex items-center gap-2">
+                  👋 Say Hi
+                </span>
+              </button>
+              <div className="flex items-center space-x-2 text-xs font-mono text-gray-400 group cursor-default">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse group-hover:scale-125 transition-transform duration-300"></span>
+                  <span className="group-hover:text-gray-300 transition-colors duration-300">SYNC_ESTABLISHED</span>
               </div>
           </div>
         </div>
@@ -346,13 +374,20 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeCh
             <div className="space-y-12">
                 <h2 className="text-4xl font-bold text-white uppercase tracking-tighter">Academic <span className="accent-text">Nodes</span></h2>
                 {RESUME_DATA.education.map((edu, i) => (
-                    <div key={i} className="reveal-card glass-card p-8 rounded-3xl border border-white/5">
-                        <h3 className="text-2xl font-bold text-white">{edu.institution}</h3>
-                        <p className="text-[var(--accent)] font-mono text-xs uppercase mt-2">{edu.degree}</p>
-                        <p className="text-gray-400 text-sm mt-4 italic">{edu.details}</p>
-                        <div className="mt-6 flex justify-between items-center text-[10px] font-mono text-gray-500">
-                            <span>PERIOD: {edu.period}</span>
-                            <span className="accent-text">VERIFIED_LOG</span>
+                    <div key={i} className="reveal-card glass-card p-8 rounded-3xl border border-white/5 hover:border-[var(--accent)]/50 transition-all duration-500 bg-black/40 backdrop-blur-2xl hover:bg-black/60 group/edu relative overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent)]/0 via-[var(--accent)]/5 to-[var(--accent)]/0 opacity-0 group-hover/edu:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--accent)] to-transparent opacity-0 group-hover/edu:opacity-50 transition-opacity duration-500"></div>
+                        <div className="relative z-10">
+                            <h3 className="text-2xl font-bold text-white group-hover/edu:text-[var(--accent)] transition-colors duration-500">{edu.institution}</h3>
+                            <p className="text-[var(--accent)] font-mono text-xs uppercase mt-2">{edu.degree}</p>
+                            <p className="text-gray-400 text-sm mt-4 italic group-hover/edu:text-gray-300 transition-colors duration-500">{edu.details}</p>
+                            <div className="mt-6 flex justify-between items-center text-[10px] font-mono text-gray-500 group-hover/edu:text-gray-400 transition-colors duration-500">
+                                <span className="flex items-center gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] opacity-60 group-hover/edu:opacity-100 group-hover/edu:animate-pulse transition-opacity duration-500"></span>
+                                    PERIOD: {edu.period}
+                                </span>
+                                <span className="accent-text group-hover/edu:opacity-80 transition-opacity duration-500">VERIFIED_LOG</span>
+                            </div>
                         </div>
                     </div>
                 ))}
@@ -386,6 +421,19 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeCh
                     <span className="relative z-10">INITIALIZE EMAIL</span>
                     <div className="absolute inset-0 bg-[var(--accent)] translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                 </a>
+                <a 
+                    href="/SathwikPentapati_resume.pdf" 
+                    download="Sathwik_Pentapati_Resume.pdf"
+                    className="group relative px-8 py-4 border-2 border-white/20 hover:border-[var(--accent)] rounded-full font-bold text-white overflow-hidden hover:scale-105 transition-all backdrop-blur-sm bg-white/5"
+                >
+                    <span className="relative z-10 flex items-center gap-2">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        DOWNLOAD RESUME
+                    </span>
+                    <div className="absolute inset-0 bg-[var(--accent)]/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                </a>
                 <div className="flex items-center space-x-4">
                     <a href={RESUME_DATA.contact.linkedin} target="_blank" className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:border-[var(--accent)] hover:scale-110 transition-all"><IconLinkedIn className="w-6 h-6 text-white" /></a>
                     <a href={RESUME_DATA.contact.github} target="_blank" className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:border-[var(--accent)] hover:scale-110 transition-all"><IconGitHub className="w-6 h-6 text-white" /></a>
@@ -400,6 +448,16 @@ const ContentOverlay: React.FC<ContentOverlayProps> = ({ currentTheme, onThemeCh
               <span className="opacity-40">Lat_24.00ms</span>
               <span className="accent-text">V4.1.0_PROD</span>
           </div>
+          <a 
+            href="/SathwikPentapati_resume.pdf" 
+            download="Sathwik_Pentapati_Resume.pdf"
+            className="pointer-events-auto text-gray-500 hover:text-[var(--accent)] transition-colors duration-300 flex items-center gap-2 lowercase tracking-normal normal-case text-xs"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span>Download Resume PDF</span>
+          </a>
           <div className="text-center opacity-30">© 2025 SATHWIK PENTAPATI // DIGITAL ARCHITECT</div>
       </footer>
     </div>
